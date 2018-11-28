@@ -33,7 +33,39 @@ class Red_flags(Resource):
 
 class PatchLocation(Resource):
 
+	def __init__(self):
+        self.incidents = RedFlagModel()
+
+    def patch(self, red_flag_id):
+        data = request.get_json(silent=True)
+        incident = next(filter(lambda x: x['id'] == red_flag_id, self.incidents.db), None)
+        if incident is None:
+            return{"message":"A red-flag incident with id '{}' does not exist.".format(red_flag_id)}, 404
+
+        elif data['location'] == None:
+            return{"message":"No location patch data was sent."}, 400
+        
+        else:
+            incident['location']= data['location']
+        return self.incidents.db, 200
+
 class PatchComment(Resource):
+
+	def __init__(self):
+        self.incidents = RedFlagModel()
+
+    def patch(self, red_flag_id):
+        data = request.get_json(silent=True)
+        incident = next(filter(lambda x: x['id'] == red_flag_id, self.incidents.db), None)
+        if incident is None:
+            return{"message":"A red-flag incident with id '{}' does not exist.".format(red_flag_id)}, 404
+
+        elif data['comment'] == None:
+            return{"message":"No comment patch data was sent."}, 400
+        
+        else:
+            incident['comment']= data['comment']
+        return self.incidents.db, 200
 
 
 
