@@ -25,6 +25,12 @@ class RedFlag(Resource, RedFlagModel):
     
 class Red_flags(Resource):
 
+	def __init__(self):
+        self.incidents = RedFlagModel()
+
+    def get(self):
+        return self.incidents.db, 200
+
 class PatchLocation(Resource):
 
 class PatchComment(Resource):
