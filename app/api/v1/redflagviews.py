@@ -18,6 +18,10 @@ class RedFlag(Resource, RedFlagModel):
         data = request.get_json(silent=True)
         self.incidents.store(data)
         return self.incidents.db
+		
+	def delete(self, red_flag_id):
+        self.incidents.db = list(filter(lambda x: x['id'] != red_flag_id, self.incidents.db))
+        return{'message':'Incident deleted'}, 200
     
 class Red_flags(Resource):
 
