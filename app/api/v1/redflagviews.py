@@ -13,19 +13,22 @@ class RedFlag(Resource, RedFlagModel):
         return {"status":200,"data":incident} if incident else {"status":404,"message":"An incident with id '{}' does not exist.".format(red_flag_id)}
     
     def post(self, red_flag_id):
+        data = request.get_json(silent=True)
+        if data['id'] != red_flag_id:
+            return {"message":"'id'{} provided by request body and 'id' {} provided by url do not match".format(data['id'],red_flag_id)}, 400
         if next(filter(lambda x: x['id'] == red_flag_id, self.incidents.db), None):
             return {"message":"A red-flag with id '{}' already exists.".format(red_flag_id)}, 400
-        data = request.get_json(silent=True)
+
         self.incidents.store(data)
-        return {"status":200,"data":{"id":red_flag_id,"message":"created red-flag record"}}
+        return {"status":201,"data":{"id":red_flag_id,"message":"created red-flag record"}}
     
     def delete(self, red_flag_id):
         incident = next(filter(lambda x: x['id'] != red_flag_id, self.incidents.db), None)
         if incident == None:
-            return{"status":404,"message":"An incident with id '{}' does not exist.".format(red_flag_id)}
+            return {"status":404,"message":"An incident with id '{}' does not exist.".format(red_flag_id)}
         else:
             self.incidents.db = list(filter(lambda x: x['id'] != red_flag_id, self.incidents.db))
-            return{'message':'Incident deleted'}, 200
+            return {"status":200,"data":{"id":red_flag_id,"message":"red-flag record has been deleted"}}
     
 class RedFlags(Resource):
 
@@ -42,12 +45,15 @@ class PatchLocation(Resource):
 
     def patch(self, red_flag_id):
         data = request.get_json(silent=True)
+        if data['id'] != red_flag_id:
+            return{"message":"'id'{} provided by request body and 'id' {} provided by url do not match".format(data['id'],red_flag_id)}, 400
+
         incident = next(filter(lambda x: x['id'] == red_flag_id, self.incidents.db), None)
         if incident is None:
             return{"message":"A red-flag incident with id '{}' does not exist.".format(red_flag_id)}, 404
 
         elif data['location'] == None:
-            return{"message":"No location patch data was sent."}, 400
+            return{"message":"No location patch data was sent."}, 404
 
         else:
             incident['location']= data['location']
@@ -60,6 +66,8 @@ class PatchComment(Resource):
 
     def patch(self, red_flag_id):
         data = request.get_json(silent=True)
+        if data['id'] != red_flag_id:
+            return{"message":"'id'{} provided by request body and 'id' {} provided by url do not match".format(data['id'],red_flag_id)}, 400
         incident = next(filter(lambda x: x['id'] == red_flag_id, self.incidents.db), None)
         if incident is None:
             return{"message":"A red-flag incident with id '{}' does not exist.".format(red_flag_id)}, 404
