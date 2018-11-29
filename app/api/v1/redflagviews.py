@@ -4,36 +4,40 @@ from flask_restful import Resource, Api
 from .redflagmodels import RedFlagModel
 
 class RedFlag(Resource, RedFlagModel):
-	
-	def __init__(self):
+
+    def __init__(self):
         self.incidents = RedFlagModel()
     
     def get(self, red_flag_id):
         incident = next(filter(lambda x: x['id'] == red_flag_id, self.incidents.db), None)
-        return incident, 200 if incident else 404
-	
-	def post(self, red_flag_id):
+        return {"status":200,"data":incident} if incident else {"status":404,"message":"An incident with id '{}' does not exist.".format(red_flag_id)}
+    
+    def post(self, red_flag_id):
         if next(filter(lambda x: x['id'] == red_flag_id, self.incidents.db), None):
             return {"message":"A red-flag with id '{}' already exists.".format(red_flag_id)}, 400
         data = request.get_json(silent=True)
         self.incidents.store(data)
-        return self.incidents.db
-		
-	def delete(self, red_flag_id):
-        self.incidents.db = list(filter(lambda x: x['id'] != red_flag_id, self.incidents.db))
-        return{'message':'Incident deleted'}, 200
+        return {"status":200,"data":{"id":red_flag_id,"message":"created red-flag record"}}
     
-class Red_flags(Resource):
+    def delete(self, red_flag_id):
+        incident = next(filter(lambda x: x['id'] != red_flag_id, self.incidents.db), None)
+        if incident == None:
+            return{"status":404,"message":"An incident with id '{}' does not exist.".format(red_flag_id)}
+        else:
+            self.incidents.db = list(filter(lambda x: x['id'] != red_flag_id, self.incidents.db))
+            return{'message':'Incident deleted'}, 200
+    
+class RedFlags(Resource):
 
-	def __init__(self):
+    def __init__(self):
         self.incidents = RedFlagModel()
 
     def get(self):
-        return self.incidents.db, 200
+        return{"status":200,"data":self.incidents.db} 
 
 class PatchLocation(Resource):
 
-	def __init__(self):
+    def __init__(self):
         self.incidents = RedFlagModel()
 
     def patch(self, red_flag_id):
@@ -44,14 +48,14 @@ class PatchLocation(Resource):
 
         elif data['location'] == None:
             return{"message":"No location patch data was sent."}, 400
-        
+
         else:
             incident['location']= data['location']
-        return self.incidents.db, 200
+        return {"status":200,"data":{"id":red_flag_id,"message":"Updated red-flag record's location"}}
 
 class PatchComment(Resource):
 
-	def __init__(self):
+    def __init__(self):
         self.incidents = RedFlagModel()
 
     def patch(self, red_flag_id):
@@ -65,8 +69,7 @@ class PatchComment(Resource):
         
         else:
             incident['comment']= data['comment']
-        return self.incidents.db, 200
-
+        return {"status":200,"data":{"id":red_flag_id,"message":"Updated red-flag record's comment"}}
 
 
 
