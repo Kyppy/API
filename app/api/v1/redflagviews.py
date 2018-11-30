@@ -23,7 +23,7 @@ class RedFlag(Resource, RedFlagModel):
         return {"status":201,"data":{"id":red_flag_id,"message":"created red-flag record"}}
     
     def delete(self, red_flag_id):
-        incident = next(filter(lambda x: x['id'] != red_flag_id, self.incidents.db), None)
+        incident = next(filter(lambda x: x['id'] == red_flag_id, self.incidents.db), None)
         if incident == None:
             return {"status":404,"message":"An incident with id '{}' does not exist.".format(red_flag_id)}
         else:
