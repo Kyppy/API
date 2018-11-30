@@ -35,6 +35,10 @@ class TestUsers(unittest.TestCase):
         response = self.app.get('/red_flag/800/comment', data=json.dumps(self.data), content_type='application/json')
         self.assertEqual(response.status_code,404)
     
+    def test_comment_patch_id_mismatch(self):
+        response = self.app.get('/red_flag/700/comment', data=json.dumps(self.data), content_type='application/json')
+        self.assertEqual(response.status_code,400)
+    
     def test_empty_location_patch(self):
         response = self.app.get('/red_flag/800/location', data=json.dumps(self.data), content_type='application/json')
         self.assertEqual(response.status_code,404)
