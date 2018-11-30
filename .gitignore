@@ -1,3 +1,4 @@
 syntax:glob   # This line is not needed for .gitignore files.
 env/		  # Exclude virtual env settings folder
 __pycache__/  # Exclude the whole folder
+.pytest_cache/
