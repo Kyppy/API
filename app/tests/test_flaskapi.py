@@ -56,6 +56,15 @@ class TestUsers(unittest.TestCase):
         response = self.app.post('/api/v1/red_flag/800', data=json.dumps(self.data), content_type='application/json')
         self.assertEqual(response.status_code,400)
     
+    def test_delete_record(self):
+        self.app.post('/api/v1/red_flag/800', data=json.dumps(self.data), content_type='application/json')
+        response = self.app.delete('/api/v1/red_flag/800')
+        result = json.loads(response.data)
+        self.assertEqual(result['status'],200)
+    
+    def test_post_record_id_mismatch(self):
+        response = self.app.post('/api/v1/red_flag/700', data=json.dumps(self.data), content_type='application/json')
+        self.assertEqual(response.status_code,400)
     
     
       
