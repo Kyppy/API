@@ -81,10 +81,7 @@ class TestUsers(unittest.TestCase):
         response = self.app.post('/api/v1/red_flag/700', data=json.dumps(self.data), content_type='application/json')
         self.assertEqual(response.status_code,400)
     
-    """
-    Arbitrary change
-    chnage
-    """
+
     
       
 
