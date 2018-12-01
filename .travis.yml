@@ -12,4 +12,5 @@ scripts:
  - nose2 --with-coverage --coverage app
 
  after_success:
+  - coveralls
   - codeclimate-test-reporter
