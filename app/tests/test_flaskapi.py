@@ -82,7 +82,7 @@ class TestUsers(unittest.TestCase):
         self.assertEqual(response.status_code,400)
     
 """
-Arbitrary change to test Coveralls
+Arbitrary change to test Coveralls.Change
 """
     
       
