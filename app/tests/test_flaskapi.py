@@ -20,6 +20,17 @@ class TestUsers(unittest.TestCase):
             "Videos":"[Image]",
             "comment":"Police bribery witnessed."
              }
+        self.data2={
+            "id":800,
+            "createdOn":"21-02-2018",
+            "createdBy":1010010,
+            "type":"red-flag",
+            "location":"15N,30N",
+            "status":"Resolved",
+            "Images":"[Image]",
+            "Videos":"[Image]",
+            "comment":"Police bribery witnessed."
+            }
     
     def test_get_empty_record(self):
         response = self.app.get('/api/v1/red_flag/800')
@@ -32,15 +43,15 @@ class TestUsers(unittest.TestCase):
         self.assertEqual(result['status'],200)
     
     def test_empty_comment_patch(self):
-        response = self.app.get('/red_flag/800/comment', data=json.dumps(self.data), content_type='application/json')
+        response = self.app.patch('/api/v1/red_flag/800/comment', data=json.dumps(self.data), content_type='application/json')
         self.assertEqual(response.status_code,404)
     
     def test_comment_patch_id_mismatch(self):
-        response = self.app.get('/red_flag/700/comment', data=json.dumps(self.data), content_type='application/json')
+        response = self.app.patch('/api/v1/red_flag/700/comment', data=json.dumps(self.data), content_type='application/json')
         self.assertEqual(response.status_code,400)
     
     def test_empty_location_patch(self):
-        response = self.app.get('/red_flag/800/location', data=json.dumps(self.data), content_type='application/json')
+        response = self.app.patch('/api/v1/red_flag/800/location', data=json.dumps(self.data), content_type='application/json')
         self.assertEqual(response.status_code,404)
     
     def test_delete_empty_record(self):
