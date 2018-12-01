@@ -7,7 +7,7 @@ python:
 install:
  - pip install -r requirements.txt
 
-scripts:
+script:
 - pytest --with-coverage --coverage app/tests
 
 after_success: 
