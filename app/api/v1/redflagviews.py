@@ -13,7 +13,7 @@ class RedFlag(Resource, RedFlagModel):
     def post(self, red_flag_id):
         data = request.get_json(silent=True)
         if data['id'] != red_flag_id:
-            return {"message":"'id'{} provided by request body and 'id' {} provided by url do not match".format(data['id'],red_flag_id)}, 404
+            return {"message":"'id'{} provided by request body and 'id' {} provided by url do not match".format(data['id'],red_flag_id)}, 400
         if next(filter(lambda x: x['id'] == red_flag_id, incidents.db), None):
             return {"message":"A red-flag with id '{}' already exists.".format(red_flag_id)}, 400
 
