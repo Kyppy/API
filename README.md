@@ -14,3 +14,4 @@ Each resource is an application of the HTTP verbs GET,POST,PATCH and DELETE.
 To use them,an appropriate request must be made to the app using a url.
 For instance to post a incident a post request must be made using http://localhost:5000/api/v1/red_flag/<incident_id>.The 'incident_id' is the unique identifier for each user post and ensures each user's post is never confused with other users.
 
+[![Build Status](https://travis-ci.org/Kyppy/API.svg?branch=develop)](https://travis-ci.org/Kyppy/API)
