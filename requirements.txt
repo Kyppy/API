@@ -24,6 +24,7 @@ Flask-Login==0.4.1
 Flask-RESTful==0.3.6
 Flask-SQLAlchemy==2.3.2
 Flask-WTF==0.14.2
+gunicorn==19.9.0
 idna==2.7
 imagesize==1.1.0
 ipykernel==5.1.0
