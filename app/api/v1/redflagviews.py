@@ -1,5 +1,5 @@
 from flask import Flask, request
-from flask_restful import Resource, Api
+from flask_restful import Resource
 
 from .redflagmodels import RedFlagModel
 
@@ -24,9 +24,9 @@ class RedFlag(Resource, RedFlagModel):
         incident = next(filter(lambda x: x['id'] == red_flag_id, incidents.db), None)
         if incident == None:
             return {"status":404,"message":"An incident with id '{}' does not exist.".format(red_flag_id)}
-        else:
-            incidents.db = list(filter(lambda x: x['id'] != red_flag_id, incidents.db))
-            return {"status":200,"data":{"id":red_flag_id,"message":"red-flag record has been deleted"}}
+     
+        incidents.db = list(filter(lambda x: x['id'] != red_flag_id, incidents.db))
+        return {"status":200,"data":{"id":red_flag_id,"message":"red-flag record has been deleted"}}
     
 class RedFlags(Resource):
    
@@ -44,11 +44,10 @@ class PatchLocation(Resource):
         if incident is None:
             return{"message":"A red-flag incident with id '{}' does not exist.".format(red_flag_id)}, 404
 
-        elif data['location'] == None:
+        if data['location'] == None:
             return{"message":"No location patch data was sent."}, 404
 
-        else:
-            incident['location']= data['location']
+        incident['location']= data['location']
         return {"status":200,"data":{"id":red_flag_id,"message":"Updated red-flag record's location"}}
 
 class PatchComment(Resource):
@@ -61,11 +60,10 @@ class PatchComment(Resource):
         if incident is None:
             return{"message":"A red-flag incident with id '{}' does not exist.".format(red_flag_id)}, 404
 
-        elif data['comment'] == None:
+        if data['comment'] == None:
             return{"message":"No comment patch data was sent."}, 400
         
-        else:
-            incident['comment']= data['comment']
+        incident['comment']= data['comment']
         return {"status":200,"data":{"id":red_flag_id,"message":"Updated red-flag record's comment"}}
 
 
