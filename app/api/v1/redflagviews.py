@@ -5,6 +5,7 @@ from flask_restful import Resource
 from .redflagmodels import RedFlagModel
 
 incidents = RedFlagModel()
+""" List variable that acts as the record database"""
 class RedFlag(Resource, RedFlagModel):
     """Contains resources for requests requiring individual/specific redflag incidents"""
     def get(self, red_flag_id):
