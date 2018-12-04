@@ -7,7 +7,7 @@ from .redflagviews import PatchLocation
 from .redflagviews import PatchComment
 
 
-version_one = Blueprint('api_v1', __name__, url_prefix = '/api/v1')
+version_one = Blueprint('api_v1', __name__, url_prefix='/api/v1')
 api = Api(version_one)
 
 api.add_resource(RedFlag, '/red_flag/<int:red_flag_id>')
