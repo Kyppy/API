@@ -17,7 +17,7 @@ class RedFlag(Resource, RedFlagModel):
         """Post a single redflag incident and returns confirmation message."""
         data = request.get_json(silent=True)
         if data['id'] != red_flag_id:
-            return {"message":"'id'{} provided by request body and 'id' {} provided by url do not match"\
+            return {"message":"'id'{} of request body and 'id' {} of url do not match"\
                               .format(data['id'], red_flag_id)}, 400
         if next(filter(lambda x: x['id'] == red_flag_id, incidents.db), None):
             return {"message":"A red-flag with id '{}' already exists.".format(red_flag_id)}, 400
@@ -50,7 +50,7 @@ class PatchLocation(Resource):
             return{"message":"A red-flag incident with id '{}' does not exist."\
             .format(red_flag_id)}, 404
         if data['location'] is None:
-            return{"message":"No location patch data was sent."}, 404
+            return{"message":"Location update data was not provided."}, 404
         incident['location'] = data['location']
         return {"status":200, "data":{"id":red_flag_id, "message":"Updated red-flag record's location"}}
 class PatchComment(Resource):
@@ -59,12 +59,12 @@ class PatchComment(Resource):
         """Edits the 'comment' field of a single redflag record.Returns confirmation."""
         data = request.get_json(silent=True)
         if data['id'] != red_flag_id:
-            return{"message":"'id'{} provided by request body and 'id' {} provided by url do not match"\
+            return{"message":"'id'{} of request body and 'id' {} of url do not match"\
                     .format(data['id'], red_flag_id)}, 400
         incident = next(filter(lambda x: x['id'] == red_flag_id, incidents.db), None)
         if incident is None:
             return{"message":"A red-flag incident with id '{}' does not exist.".format(red_flag_id)}, 404
         if data['comment'] is None:
-            return{"message":"No comment patch data was sent."}, 400
+            return{"message":"Comment update data was not provided."}, 400
         incident['comment'] = data['comment']
         return {"status":200, "data":{"id":red_flag_id, "message":"Updated red-flag record's comment"}}
