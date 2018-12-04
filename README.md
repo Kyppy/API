@@ -11,13 +11,15 @@ Returns a list of 'red-flag' records as dicts.
 * Method:
    * GET
 * URL Params
--Required 
-* URL Params
+   * Required: red_flag_id =[integer] 
+* Data Params
    * None
-* URL Params
-   * None 
-* URL Params
-   * None
+* Success Response
+   * Code:200 
+   * Content:{"status":200, "data":[list of dicts}
+   
+* Error Response
+   * Method will always return list.If no data present will return empty list.
 
 [![Build Status](https://travis-ci.org/Kyppy/API.svg?branch=develop)](https://travis-ci.org/Kyppy/API)
 
