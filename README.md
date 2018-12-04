@@ -3,7 +3,7 @@ This API contains request resources for the iReporter webapp.This repo also incl
 
 ## Endpoint Documentation ##
 
-## Get All 'red-flag' Incidents ##
+## Get All Redflag Incidents ##
 Returns a list of 'red-flag' records as dicts.
 
 * URL
@@ -21,7 +21,7 @@ Returns a list of 'red-flag' records as dicts.
 * Error Response
    * If no red-flag records exist will return empty list.
 
-## Get A Specific 'red-flag' Incident ##
+## Get A Specific Redflag Incident ##
 Returns a dict of a single 'red-flag' record. Record is specified by its 'id' field.
 
 * URL
