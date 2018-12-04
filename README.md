@@ -8,7 +8,12 @@ Returns a list of 'red-flag' records as dicts.
 
 * URL
    * /api/v1/red_flags
-
+* Method:
+   * GET
+* URL Params
+   * None 
+ 
+ 
  
 [![Build Status](https://travis-ci.org/Kyppy/API.svg?branch=develop)](https://travis-ci.org/Kyppy/API)
 
