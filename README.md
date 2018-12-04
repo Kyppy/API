@@ -6,8 +6,8 @@ This API contains request resources for the iReporter webapp.This repo also incl
 ## Get All 'red-flag' Incident Records ##
 Returns a list of 'red-flag' records as dicts.
 
-*URL
- */api/v1/red_flags
+* URL
+ * /api/v1/red_flags
 
  
 [![Build Status](https://travis-ci.org/Kyppy/API.svg?branch=develop)](https://travis-ci.org/Kyppy/API)
