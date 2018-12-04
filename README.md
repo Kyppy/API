@@ -11,7 +11,7 @@ Returns a list of 'red-flag' records as dicts.
 * Method:
    * GET
 * URL Params
-    Required 
+-Required 
 * URL Params
    * None
 * URL Params
