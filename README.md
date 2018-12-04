@@ -11,10 +11,14 @@ Returns a list of 'red-flag' records as dicts.
 * Method:
    * GET
 * URL Params
+    Required 
+* URL Params
+   * None
+* URL Params
    * None 
- 
- 
- 
+* URL Params
+   * None
+
 [![Build Status](https://travis-ci.org/Kyppy/API.svg?branch=develop)](https://travis-ci.org/Kyppy/API)
 
 [![Coverage Status](https://coveralls.io/repos/github/Kyppy/API/badge.svg?branch=develop)](https://coveralls.io/github/Kyppy/API?branch=develop)
