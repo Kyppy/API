@@ -18,25 +18,7 @@ class RedFlag(Resource, RedFlagModel):
                         incidents.db), None)
         return {"status": 200, "data": incident} if incident else\
             {"status": 404, "message": "An incident with "
-                            "id '{}' does not exist.".format(red_flag_id)}
-
-    def post(self, red_flag_id):
-        """Post a single redflag incident and returns confirmation message."""
-        data = request.get_json(silent=True)
-        if data['createdBy'] is None or data['createdBy'] == "":
-            return {"message": "Incident author does not exist"}, 400
-        if data['comment'] is None or data['comment'] == "":
-            return {"message": "Incident does not contain report"}, 400
-        if data['id'] != red_flag_id:
-            return {"message": "'id'{} of request body "
-                    "and 'id' {} of url do not match"
-                    .format(data['id'], red_flag_id)}, 400
-        if next(filter(lambda x: x['id'] == red_flag_id, incidents.db), None):
-            return {"message": "A red-flag with id '{}' already exists."
-                    .format(red_flag_id)}, 400
-        incidents.store(data)
-        return {"status": 201, "data": {"id": red_flag_id, 
-                "message": "created red-flag record"}}
+                            "id '{}' does not exist.".format(red_flag_id)}, 404
 
     def delete(self, red_flag_id):
         """Delete a single redflag incident"""
@@ -45,11 +27,11 @@ class RedFlag(Resource, RedFlagModel):
         if incident is None:
             return {"status": 404, "message":
                     "An incident with id '{}' does not exist."
-                    .format(red_flag_id)}
+                    .format(red_flag_id)}, 404
         incidents.db = list(filter(lambda x: x['id'] != red_flag_id, 
                             incidents.db))
         return {"status": 200, "data": {"id": red_flag_id, 
-                "message": "red-flag record has been deleted"}} 
+                "message": "red-flag record has been deleted"}}, 200 
 
 
 class RedFlags(Resource):
@@ -57,7 +39,16 @@ class RedFlags(Resource):
     all of the current redflag posts"""
     def get(self):
         """Returns all redflag records"""
-        return{"status": 200, "data": incidents.db} 
+        return{"status": 200, "data": incidents.db}, 200
+
+    def post(self):
+        """Post a single redflag incident and returns confirmation message."""
+        data = request.get_json(silent=True)
+        if data['comment'] is None or data['comment'] == "":
+            return {"message": "Incident does not contain report"}, 400
+        incidents.store(data)
+        return {"status": 201, "data": {"message": 
+                "created red-flag record"}}, 201
 
 
 class PatchLocation(Resource):
@@ -67,9 +58,6 @@ class PatchLocation(Resource):
         """Edits the 'location' field of a single 
         redflag record.Returns confirmation."""
         data = request.get_json(silent=True)
-        if data['id'] != red_flag_id:
-            return{"message": "'id'{} of request body and'id' {} of url " 
-                   "do not match".format(data['id'], red_flag_id)}, 400
         incident = next(filter(lambda x: x['id'] == red_flag_id, 
                         incidents.db), None)
         if incident is None:
@@ -90,9 +78,6 @@ class PatchComment(Resource):
         """Edits the 'comment' field of a single redflag record.
         Returns confirmation message."""
         data = request.get_json(silent=True)
-        if data['id'] != red_flag_id:
-            return{"message": "'id'{} of request body and'id' {} of url " 
-                   "do not match".format(data['id'], red_flag_id)}, 400
         incident = next(filter(lambda x: x['id'] == red_flag_id, 
                         incidents.db), None)
         if incident is None:
