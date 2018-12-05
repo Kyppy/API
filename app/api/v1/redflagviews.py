@@ -23,6 +23,10 @@ class RedFlag(Resource, RedFlagModel):
     def post(self, red_flag_id):
         """Post a single redflag incident and returns confirmation message."""
         data = request.get_json(silent=True)
+        if data['createdBy'] is None or data['createdBy'] == "":
+            return {"message": "Incident author does not exist"}, 400
+        if data['comment'] is None or data['comment'] == "":
+            return {"message": "Incident does not contain report"}, 400
         if data['id'] != red_flag_id:
             return {"message": "'id'{} of request body\
                     and 'id' {} of url do not match"
