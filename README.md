@@ -1,6 +1,16 @@
 # iReporter API #
 This API contains request resources for the iReporter webapp.This repo also includes configuration files that enable continuous integration on Travis CI as well as cloud-based app hosting on Heroku.
 
+### Continuous Integration Badges ###
+[![Build Status](https://travis-ci.org/Kyppy/API.svg?branch=develop)](https://travis-ci.org/Kyppy/API)
+
+[![Coverage Status](https://coveralls.io/repos/github/Kyppy/API/badge.svg?branch=develop)](https://coveralls.io/github/Kyppy/API?branch=develop)
+
+[![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg)](https://codeclimate.com/github/Kyppy/API)
+
+### Heroku App Link ###
+https://redflag-ch2-api.herokuapp.com/api/v1/red_flags
+
 ## Endpoint Documentation ##
 
 ## Get All Redflag Incidents ##
@@ -126,12 +136,3 @@ Removes the dict of a single 'red-flag' record. Record is specified by its 'id' 
    * Code: 404
    * Content: {"status":404, "message":"An incident with id '<red_flag_id>' does not exist."}
    
-### Continuous Integration Badges ###
-[![Build Status](https://travis-ci.org/Kyppy/API.svg?branch=develop)](https://travis-ci.org/Kyppy/API)
-
-[![Coverage Status](https://coveralls.io/repos/github/Kyppy/API/badge.svg?branch=develop)](https://coveralls.io/github/Kyppy/API?branch=develop)
-
-[![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg)](https://codeclimate.com/github/Kyppy/API)
-
-### Heroku App Link ###
-https://redflag-ch2-api.herokuapp.com/api/v1/red_flags
