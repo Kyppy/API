@@ -21,7 +21,7 @@ more-itertools==4.3.0
 pluggy==0.8.0
 post==2018.11.20
 public==2018.11.20
-py==1.7.0
+py==1.10.0
 pytest==4.0.1
 python-coveralls==2.9.1
 pytz==2018.7
